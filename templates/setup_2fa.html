@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="col-md-8 offset-md-2 text-center">
+    <h2>Set Up Two-Factor Authentication</h2>
+    <p class="lead">Scan the QR code below with your authenticator app (e.g., Google Authenticator, Authy).</p>
+    <img src="data:image/png;base64,{{ qr_code_data }}" alt="QR Code">
+    <p class="mt-3">If you cannot scan the QR code, you can manually enter this secret key:</p>
+    <p><code>{{ secret_key }}</code></p>
+    <a href="{{ url_for('index') }}" class="btn btn-success">I have set up 2FA, continue to my account</a>
+</div>
+{% endblock %}

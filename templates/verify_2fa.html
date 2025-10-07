@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="col-md-6 offset-md-3">
+    <h2>Enter 2FA Token</h2>
+    <p>Please enter the 6-digit token from your authenticator app.</p>
+    <form method="POST" action="">
+        <div class="mb-3">
+            <label for="token" class="form-label">Token</label>
+            <input type="text" class="form-control" id="token" name="token" required autofocus>
+        </div>
+        <button type="submit" class="btn btn-primary">Verify</button>
+    </form>
+</div>
+{% endblock %}

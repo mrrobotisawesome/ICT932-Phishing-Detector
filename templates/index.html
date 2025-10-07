@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="row">
+    <div class="col-md-6">
+        <h2>Analyze a New Email</h2>
+        <form method="POST" action="{{ url_for('analyze') }}">
+            <div class="mb-3">
+                <label for="email_content" class="form-label">Paste full email content here:</label>
+                <textarea class="form-control" id="email_content" name="email_content" rows="10" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Analyze</button>
+        </form>
+
+        {% if results %}
+        <div class="mt-4">
+            <h3>Analysis Results</h3>
+            {% if results.risk_level == 'Malicious' %}
+            <div class="alert alert-danger"><strong>Risk Level: {{ results.risk_level }}</strong></div>
+            {% elif results.risk_level == 'Suspicious' %}
+            <div class="alert alert-warning"><strong>Risk Level: {{ results.risk_level }}</strong></div>
+            {% else %}
+            <div class="alert alert-success"><strong>Risk Level: {{ results.risk_level }}</strong></div>
+            {% endif %}
+            <h5>Findings:</h5>
+            <ul>
+                {% for finding in results.findings %}
+                <li>{{ finding }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+    </div>
+
+    <div class="col-md-6">
+        <h2>Your Past Analyses</h2>
+        <div class="list-group">
+            {% for analysis in user_analyses %}
+            <div class="list-group-item list-group-item-action flex-column align-items-start">
+                <div class="d-flex w-100 justify-content-between">
+                    <h5 class="mb-1">Risk: {{ analysis.risk_level }}</h5>
+                    <small>{{ analysis.timestamp.strftime('%Y-%m-%d %H:%M') }}</small>
+                </div>
+                <p class="mb-1"><strong>Content Snippet:</strong> {{ analysis.email_content[:100] }}...</p>
+                <small><strong>Findings:</strong> {{ analysis.findings }}</small>
+            </div>
+            {% else %}
+            <p>You have not performed any analyses yet.</p>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

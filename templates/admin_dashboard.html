@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Admin Dashboard: All Analyses</h2>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>User</th>
+            <th>Timestamp</th>
+            <th>Risk Level</th>
+            <th>Findings</th>
+            <th>Content Snippet</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for analysis in all_analyses %}
+        <tr>
+            <td>{{ analysis.id }}</td>
+            <td>{{ analysis.user.username }}</td>
+            <td>{{ analysis.timestamp.strftime('%Y-%m-%d %H:%M') }}</td>
+            <td>{{ analysis.risk_level }}</td>
+            <td>{{ analysis.findings }}</td>
+            <td>{{ analysis.email_content[:100] }}...</td>
+        </tr>
+        {% else %}
+        <tr>
+            <td colspan="6">No analyses have been performed yet.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
